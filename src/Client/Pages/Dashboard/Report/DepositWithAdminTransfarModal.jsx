@@ -25,7 +25,7 @@ export default ({ row, onHide, show, ...modalProps }) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/approveTransfarWithDepositbySubAdmin",
+        "https://kgco.kingbaji.live/api/v1/approveTransfarWithDepositbySubAdmin",
         {
           userId: row.userId,
           referralCode: user.referralCode,
