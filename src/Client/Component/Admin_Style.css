@@ -1,0 +1,119 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: "SolaimanLipiNormal";
+  src: url("../../Fonts/SolaimanLipi/solaimanlipi_20-04-07.eot");
+  src: url("../../Fonts/SolaimanLipi/solaimanlipi_20-04-07.eot")
+      format("embedded-opentype"),
+    url("../../Fonts/SolaimanLipi/solaimanlipi_20-04-07.woff") format("woff"),
+    url("../../Fonts/SolaimanLipi/solaimanlipi_20-04-07.ttf") format("truetype"),
+    url("../../Fonts/SolaimanLipi/SolaimanLipi_29-05-06.svg") format("svg");
+}
+
+:root {
+  --color1: #1a1b1c;
+  --white: #fff;
+  --black1: #000;
+  --black2: #282828;
+  --gray: #555;
+
+  --text: #fff;
+  --slug: red;
+  --back: #fff;
+  --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  /* #1b7780 */
+  /* #022e52 */
+  /* #124B65 */
+}
+body {
+  font-family: "SolaimanLipiNormal", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  background: #eff3f4;
+  user-select: none;
+  /* background: #eaeaea; */
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1212px !important;
+  }
+}
+/*======================== For LAZY LOAD CSS ============================*/
+.lazyload {
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.lazy-loaded {
+  opacity: 1;
+}
+/*======================== CUSTOM BOOTSTRAP STYLE ============================*/
+.custom-container {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.custom-row {
+  margin-right: -12px;
+  margin-left: -12px;
+}
+.custom-padding {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.p-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.p-left-0 {
+  padding-left: 0;
+}
+.p-right-0 {
+  padding-right: 0;
+}
+.m-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.mb_1 {
+  margin-bottom: 20px;
+}
+
+.mb_2 {
+  margin-bottom: 24px;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+textarea {
+  font-family: "SolaimanLipiNormal", Helvetica, Arial, SolaimanLipi, sans-serif;
+  font-weight: 400;
+}
+a {
+  font-family: "SolaimanLipiNormal", Helvetica, Arial, sans-serif;
+  :focus {
+    outline: 0 solid !important;
+  }
+  :hover {
+    text-decoration: none !important;
+  }
+}
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill {
+  &,
+  :hover,
+  :focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  }
+}
