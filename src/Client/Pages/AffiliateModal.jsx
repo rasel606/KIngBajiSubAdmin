@@ -35,12 +35,10 @@ export default ({ show, setShow }) => {
   
     // console.log(user.referredCode);
   
-    const copyToClipboard = () => {
-      navigator.clipboard.writeText(user?.affiliate_referredLink).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
-      });
-    };
+      const copyToClipboard = () => {
+    navigator.clipboard.writeText(user.affiliate_referredsLink);
+    alert('Invitation code copied!');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

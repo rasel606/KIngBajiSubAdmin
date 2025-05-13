@@ -19,6 +19,8 @@ const AddPaymentMethodModal = ({ show, handleClose }) => {
     // type: "",
     payment_type: "",
     image_url: image,
+    minimun_amount: "",
+    maximun_amount: "",
     start_time: { hours: 0, minutes: 0 },
     end_time: { hours: 23, minutes: 59 },
   }));
@@ -38,7 +40,6 @@ const AddPaymentMethodModal = ({ show, handleClose }) => {
       [name]: value,
     }));
   };
-  
 
   const handleTimeChange = (e, field, key) => {
     setFormData((prev) => ({
@@ -99,7 +100,7 @@ const AddPaymentMethodModal = ({ show, handleClose }) => {
               value={formData.gateway_name}
               onChange={handleNameChange}
             >
-                <option value="Bkash">Select A Gateway </option>
+              <option value="Bkash">Select A Gateway </option>
               <option value="Bkash">Bkash </option>
               <option value="Nagad">Nagad </option>
               <option value="Rocket">Rocket </option>
@@ -137,7 +138,7 @@ const AddPaymentMethodModal = ({ show, handleClose }) => {
               value={formData.payment_type}
               onChange={handleChange}
             >
-                <option value="Bkash">Select A Payment Type </option>
+              <option value="Bkash">Select A Payment Type </option>
               <option value="Send Money">Send Money</option>
               <option value="Cashout">Cash Out</option>
               <option value="Payment">Payment</option>
@@ -151,7 +152,27 @@ const AddPaymentMethodModal = ({ show, handleClose }) => {
               name="gateway_Number"
               value={formData.gateway_Number}
               onChange={handleChange}
-              placeholder="4-15 characters, no spaces"
+              placeholder="number"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Getway Minimun Amount</Form.Label>
+            <Form.Control
+              type="number"
+              name="minimun_amount"
+              value={formData.minimun_amount}
+              onChange={handleChange}
+              placeholder="Minimum amount"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Getway Maximun Amount</Form.Label>
+            <Form.Control
+              type="number"
+              name="maximun_amount"
+              value={formData.maximun_amount}
+              onChange={handleChange}
+              placeholder="Maximum amount"
             />
           </Form.Group>
           <Form.Group className="mb-3">

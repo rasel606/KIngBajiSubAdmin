@@ -127,27 +127,34 @@ export default ({ show, setShow }) => {
     }
   };
   const invitationCode = `${user.referralCode}`;
-  const invitationUrl = `https://kingbaji.live/?ref=${user.referralCode}`;
+  const invitationUrl = `http://localhost:3000/?ref=${user.referralCode}`;
 
+console.log(user);
+console.log(user.referralCode);
+console.log(invitationUrl);
+  // const copyToClipboard = () => {
+  //   if (!invitationUrl.length) {
+  //     console.error("No referral link available to copy");
+  //     return;
+  //   }
+  
+  //   const clipboard = new Clipboard('.btn-copy', {
+  //     text: () => invitationUrl
+  //   });
+  
+  //   clipboard.on('success', () => {
+  //     setCopied(true);
+  //     setTimeout(() => setCopied(false), 1000);
+  //   });
+  
+  //   clipboard.on('error', (err) => {
+  //     console.error("Clipboard copy failed:", err);
+  //   });
+  // };
 
-  const copyToClipboard = () => {
-    if (!user?.invitationUrl) {
-      console.error("No referral link available to copy");
-      return;
-    }
-  
-    const clipboard = new Clipboard('.btn-copy', {
-      text: () => user.invitationUrl,
-    });
-  
-    clipboard.on('success', () => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1000);
-    });
-  
-    clipboard.on('error', (err) => {
-      console.error("Clipboard copy failed:", err);
-    });
+    const copyToClipboard = () => {
+    navigator.clipboard.writeText(invitationUrl);
+    alert('Invitation code copied!');
   };
   
   

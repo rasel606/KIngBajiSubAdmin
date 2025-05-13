@@ -10,27 +10,28 @@ import {
 import axios from "axios";
 import { useAuth } from "../../../Component/AuthContext";
 
-export default ({ row, onHide, show, ...modalProps }) => {
+export default ({ row, onHide, show }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false); // State for showing the toast
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [type, setType] = useState(0); // Type 0 for Deposit, 1 for Withdrawal
 
   const { user } = useAuth(); // Assuming you have useAuth to get the user context
-
+console.log(row.userId, user.referralCode, amount, row.phone[0].number, type);
   const handleApprove = async () => {
+    
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://api.kingbaji.live/api/v1/approveTransfarWithDepositbySubAdmin",
+        "http://localhost:5000/api/v1/approveTransfarWithDepositbySubAdmin",
         {
           userId: row.userId,
           referralCode: user.referralCode,
-          amount,
-          mobile: row.phone,
+          amount: amount,
+          mobile: row.phone[0].number,
           type: type,
           email: user.email,
         }
@@ -100,7 +101,7 @@ export default ({ row, onHide, show, ...modalProps }) => {
           <label>Transaction Type:</label>
           <select
             value={type}
-            onChange={(e) => setType(parseInt(e.target.value))}
+            onChange={(e) => setType(e.target.value)}
             required
           >
             <option value={0}>Deposit</option>
