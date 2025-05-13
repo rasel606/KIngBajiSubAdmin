@@ -78,7 +78,7 @@ console.log(data);
  
    useEffect(() => {
      fetchWithdrawals();
-   }, [filters]);
+   }, [filters,user.balance]);
  
   // const {transactionID, 
   //   userId,

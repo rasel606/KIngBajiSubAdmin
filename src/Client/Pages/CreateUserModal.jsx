@@ -127,7 +127,7 @@ export default ({ show, setShow }) => {
     }
   };
   const invitationCode = `${user.referralCode}`;
-  const invitationUrl = `http://localhost:3000/?ref=${user.referralCode}`;
+  const invitationUrl = `https://kingbaji.live/?ref=${user.referralCode}`;
 
 console.log(user);
 console.log(user.referralCode);
