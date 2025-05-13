@@ -19,6 +19,7 @@ import DepositReportRejects from "./Pages/Dashboard/Report/Depositrejected/Depos
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 import UpdatePassword from "./Pages/UpdatePassword.jsx";
+import WidthrawGetway from "./Pages/Dashboard/withdrawGetWay/WidthrawGetway.jsx";
 
 const ClientLayout = lazy(() => import("./Component/ClientLayout.jsx"));
 const SubAdminHome = lazy(() => import("./Pages/Home/SubAdminHome.jsx"));
@@ -54,6 +55,10 @@ export default  [
       {
         path: "subAdmingetway",
         element: (<ProtectedRoute requiredRole="subAdmin"><Getway /></ProtectedRoute>),
+      },
+      {
+        path: "SubAdminGetwayWidthraw",
+        element: (<ProtectedRoute requiredRole="subAdmin"><WidthrawGetway /></ProtectedRoute>),
       },
       // {
       //   path: "affiliate-list",

@@ -107,9 +107,15 @@ export default () => {
       subMenu: [],
     },
     {
-      title: "Getway",
+      title: "DepositGetway",
       icon: <TbCashBanknoteFilled className="side-bar-item-icon" />,
       url: "subAdmingetway",
+      subMenu: [],
+    },
+    {
+      title: "Widthraw Getway",
+      icon: <TbCashBanknoteFilled className="side-bar-item-icon" />,
+      url: "SubAdminGetwayWidthraw",
       subMenu: [],
     },
     {

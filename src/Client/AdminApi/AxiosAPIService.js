@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "https://api.kingbaji.live/api/v1" });
+const API = axios.create({ baseURL: "http://localhost:5000/api/v1" });
 
 // Interceptor to attach token to all requests
 API.interceptors.request.use((req) => {
@@ -65,11 +65,15 @@ export const UpdateWidthdraw_listStutas = ( transactionID, userId, status, refer
 
 
 export const UpdateDepositsgatway_list = (data) => API.post("/subadmingetwaylist", data);
+export const UpdateWidthdrawgatway_list = (data) => API.post("/subadmin_getway_list_Widthraw", data);
+export const updateWidthrawGatewayStatus = (data) => API.post("/update_widthraw_gateway_status", data);
 export const AdminVerifyPhone = (data) => API.post("/admin_verify_phone", data);
 export const AdminVerifyEmail = (data) => API.post("/admin_verify_email", data);
 export const ChangeEmailByAdmin = (data) => API.post("/admin_change_email_by_user", data);
 export const changePasswordUserByAdmin = (data) => API.post("/admin_change_password_by_user", data);
-export const UpdategetWay_list = (formData) => API.post("/addpaymentMethodNumber", {formData});
+export const UpdategetWay_list = (formData) => API.post("/add_payment_Method_deposit", {formData});
+export const updateWithdrawalGatewayType = (formData) => API.post("/update_withdrawal_gateway_type", {formData});
+export const UpdategetWay_listWidthdraw = (formData) => API.post("/add_payment_Method_Widthral", {formData});
 
 
 
