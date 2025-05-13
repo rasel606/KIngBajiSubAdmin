@@ -126,8 +126,8 @@ export default ({ show, setShow }) => {
       setShowToast(true);
     }
   };
-  const invitationCode = `${userDeatils.referralCode}`;
-  const invitationUrl = `http://localhost:3000/?ref=${userDeatils.referralCode}`;
+  const invitationCode = `${user.referralCode}`;
+  const invitationUrl = `https://kingbaji.live/?ref=${user.referralCode}`;
 
 
   const copyToClipboard = () => {
