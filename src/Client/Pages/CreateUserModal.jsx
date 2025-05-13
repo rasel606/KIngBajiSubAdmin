@@ -18,8 +18,7 @@ export default ({ show, setShow }) => {
 
   const currencies = [
     { Id: "Option 1", Currency: "BDT", code: "+880", flag: "BD" },
-    { Id: "Option 2", Currency: "INR", code: "+091", flag: "IN" },
-    { Id: "Option 3", Currency: "PKR", code: "+092", flag: "PK" },
+  
   ];
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();

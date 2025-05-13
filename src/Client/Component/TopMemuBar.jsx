@@ -257,13 +257,13 @@ export default () => {
             <div className="header-desktop__former">
               <div className="header-desktop__latter">
                 <div className="header-desktop__item header-desktop__auth-container auth-container ">
-                  {/* <Button className="mx-2"
+                  <Button className="mx-2"
                     variant="primary"
                     onClick={() => setShowAffiliate(true)}
                   >
                     Affiliate
                   </Button>
-                  <Button className="mx-2"
+                  {/* <Button className="mx-2"
                     variant="secondary"
                     onClick={() => setShowAgent(true)}
                   >

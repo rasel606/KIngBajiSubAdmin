@@ -13,6 +13,7 @@ export default () => {
     "serial",
     "Amount",
     "Base Amount",
+    "Bonus Amount",
     "Mobile",
     "Gateway Number",
     "Gateway Name",

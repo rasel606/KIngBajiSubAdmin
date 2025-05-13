@@ -45,7 +45,7 @@ export const searchWidthdrawTransactionsReportReject = (params) => API.post("/se
 
 
 
-export const searchTransactionsbyUserId = (params) => API.post("/searchTransactionsbyUserId", params);
+export const searchTransactionsbyUserId = (data) => API.post("/searchTransactionsbyUserId", data);
 export const totalDeposit = (referredBy) => API.post("/sub_admin_deposit_total", referredBy);
 export const totalWidthraw = (referredBy) => API.post("/sub_admin_widthraw_total", referredBy);
 
@@ -65,6 +65,10 @@ export const UpdateWidthdraw_listStutas = ( transactionID, userId, status, refer
 
 
 export const UpdateDepositsgatway_list = (data) => API.post("/subadmingetwaylist", data);
+export const AdminVerifyPhone = (data) => API.post("/admin_verify_phone", data);
+export const AdminVerifyEmail = (data) => API.post("/admin_verify_email", data);
+export const ChangeEmailByAdmin = (data) => API.post("/admin_change_email_by_user", data);
+export const changePasswordUserByAdmin = (data) => API.post("/admin_change_password_by_user", data);
 export const UpdategetWay_list = (formData) => API.post("/addpaymentMethodNumber", {formData});
 
 
@@ -83,3 +87,6 @@ export const chatsSummary = (referredBy) => API.post("/sub_admin_chats_deposit_S
 
 export const verifyEmail = (formData) => API.post("/verify-email", formData);
 export const Emailsend = (formData) => API.post("/send-otp", formData);
+export const GetGameProvider = () => API.get("/get_all_providers");
+export const GetGameCategory= () => API.get("/get_all_category");
+export const GetBettingHistoryByMember = (data) => API.post("/bettingHistory-member-summary", data);

@@ -10,8 +10,8 @@ export default () => {
   const headers = [
     "userId",
     "name",
-    "Mobile",
     "countryCode",
+    "Mobile",
     "email",
     "balance",
     "referralCode",
@@ -21,13 +21,13 @@ export default () => {
     "Provider History",
     "Date Time",
     "Tnx History",
-  
     "Game History",
+    "Password",
     
   ];
 
     const { isAuthenticated, user, hasRole } = useAuth();
-    console.log(user.referralCode);
+    // console.log(user.referralCode);
   const [data, setData] = useState([]);
   const [referredCode, setReferredCode] = useState(""); // Store the referredCode for filtering
   const [modalShow, setModalShow] = useState(false);
@@ -87,7 +87,7 @@ console.log(data);
  
 
   return (
-    <div  >
+    <div style={{height:"100vh"}} >
       <Card body style={{ background: "#38094d" }} className="mx-3 ">
         <div className="d-flex">
           <div className="mx-2">
@@ -110,7 +110,7 @@ console.log(data);
             <Form.Label className="text-white"> Phone</Form.Label>
             <Form.Control
               type="text"
-              value={filters. phone}
+              value={filters.phone}
               onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
             />
           </div>
@@ -124,9 +124,9 @@ console.log(data);
         </div>
       </Card>
       <div className="m-3">
-        <Card  style={{ background: "transparent" }}>
-          <UserTableReportList data={data} headers={headers}   style={{ background: "transparent" }}/>
-        </Card>
+        
+          <UserTableReportList data={data} headers={headers}   />
+       
       </div>
     </div>
   );
