@@ -1,46 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import { updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
 
 export default ({ show, onHide, row }) => {
   const [formData, setFormData] = useState({
-    gateway_name: '',
-    payment_type: '',
-    gateway_number: '',
+    gateway_name: "",
+    payment_type: "",
+    gateway_number: "",
     is_active: true,
   });
 
+  // Store original values using useRef
+  const originalGatewayNumber = useRef("");
+  const originalPaymentType = useRef("");
+
   useEffect(() => {
-    if (gateway) {
+    if (row) {
       setFormData({
-        gateway_name: row.gateway_name || '',
-        payment_type: row.payment_type || '',
-        gateway_number: row.gateway_number || '',
-        is_active:row.is_active ?? true,
+        gateway_name: row.gateway_name || "",
+        payment_type: row.payment_type || "",
+        gateway_number: row.gateway_Number || "",
+        is_active: row.is_active ?? true,
       });
+
+      // Save original values
+      originalGatewayNumber.current = row.gateway_Number || "";
+      originalPaymentType.current = row.payment_type || "";
     }
-  }, [gateway]);
+  }, [row]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await updateWithdrawalGatewayType(row.id, formData);
+      const response = await updateWithdrawalGatewayType(formData);
       if (response.data.success) {
-        alert('Gateway updated successfully!');
+        alert("Gateway updated successfully!");
         onHide();
       } else {
-        alert('Update failed!');
+        alert("Update failed!");
       }
     } catch (err) {
       console.error(err);
-      alert('Error updating gateway');
+      alert("Error updating gateway");
     }
   };
 
@@ -61,18 +69,26 @@ export default ({ show, onHide, row }) => {
             />
           </Form.Group>
 
-          <Form.Group className="mt-2">
-            <Form.Label>Payment Type</Form.Label>
-            <Form.Control
-              type="text"
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Payment Type <small className="text-muted">(Previous: {originalPaymentType.current})</small>
+            </Form.Label>
+            <Form.Select
               name="payment_type"
               value={formData.payment_type}
               onChange={handleChange}
-            />
+            >
+              <option value="">Select A Payment Type</option>
+              <option value="Send Money">Send Money</option>
+              <option value="Cashout">Cash Out</option>
+              <option value="Payment">Payment</option>
+            </Form.Select>
           </Form.Group>
 
           <Form.Group className="mt-2">
-            <Form.Label>Gateway Number</Form.Label>
+            <Form.Label>
+              Gateway Number <small className="text-muted">(Previous: {originalGatewayNumber.current})</small>
+            </Form.Label>
             <Form.Control
               type="text"
               name="gateway_number"
@@ -104,5 +120,3 @@ export default ({ show, onHide, row }) => {
     </Modal>
   );
 };
-
-

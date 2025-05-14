@@ -83,7 +83,7 @@ const AuthContextProvider = ({ children }) => {
     }
   
     setLoading(true);
-    axios.get('https://api.kingbaji.live/api/v1/verify_sub_admin', {
+    axios.get('http://localhost:5000/api/v1/verify_sub_admin', {
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
     })
       .then((response) => {

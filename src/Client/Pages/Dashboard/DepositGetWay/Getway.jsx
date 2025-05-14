@@ -3,7 +3,8 @@ import { Card, Row, Col, Button, Table, Form } from "react-bootstrap";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import MySubAdminGetWayModal from "./MySubAdminGetWayModal"; // Assuming your modal for editing
-import { UpdateDepositsgatway_list } from "../../../AdminApi/AxiosAPIService";
+import GatWayModal from "./GetWayModal"; // Assuming your modal for editing
+import { updateDepositGatewayStatus, UpdateDepositsgatway_list } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
 export default () => {
   const { isAuthenticated, user, hasRole } = useAuth();
@@ -12,9 +13,10 @@ export default () => {
   const [gatewayCount, setGatewaysCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [showUpdateGateWay, setShowUpdateGateWay] = useState(null);
 
   // Assuming 'user_role' and 'email' are stored in state or context
-console.log(user.user_role, user.email, user.referralCode);
+  console.log(user.user_role, user.email, user.referralCode);
   const data = {
     email: user?.email,
     referralCode: user?.referralCode,
@@ -22,7 +24,7 @@ console.log(user.user_role, user.email, user.referralCode);
   useEffect(() => {
     // Fetch gateway list from backend on component mount
     const fetchGateways = async () => {
-      console.log( user.email, user.referralCode);
+      console.log(user.email, user.referralCode);
       try {
         const response = await UpdateDepositsgatway_list(data);
         setGateways(response.data.gateways);
@@ -36,15 +38,25 @@ console.log(user.user_role, user.email, user.referralCode);
   }, []);
 
   // Toggle active status of gateway
-  const toggleActiveStatus = (id, isActive) => {
+ const toggleActiveStatus = async (gateway_name, currentStatus) => {
+  const newStatus = !currentStatus;
+
+  try {
+    await updateDepositGatewayStatus({ gateway_name, is_active: newStatus });
+
     const updatedGateways = gateways.map((gateway) => {
-      if (gateway.Id === id) {
-        return { ...gateway, isActive: isActive === "true" ? "false" : "true" };
+      if (gateway.gateway_name === gateway_name) {
+        return { ...gateway, is_active: newStatus };
       }
       return gateway;
     });
+
     setGateways(updatedGateways);
-  };
+  } catch (error) {
+    console.error("Failed to update status:", error);
+    console.log(error);
+  }
+};
 
   const formatTime = (timeObj) => {
     return `${timeObj.hours}:${timeObj.minutes}`;
@@ -75,13 +87,7 @@ console.log(user.user_role, user.email, user.referralCode);
 
       <div className="m-3">
         <Card body>
-          <Table
-            responsive
-            striped
-            bordered
-            hover
-            style={{  }}
-          >
+          <Table responsive striped bordered hover style={{}}>
             <thead>
               <tr>
                 <th className="text-center" style={{ color: "#38094d" }}>
@@ -114,7 +120,7 @@ console.log(user.user_role, user.email, user.referralCode);
                 <th className="text-center" style={{ color: "#38094d" }}>
                   image
                 </th>
-                
+
                 <th className="text-center" style={{ color: "#38094d" }}>
                   Update Time
                 </th>
@@ -125,57 +131,73 @@ console.log(user.user_role, user.email, user.referralCode);
             </thead>
 
             <tbody>
-              {gateways ? gateways?.map((row, index) => (
-                <tr
-                  className="text-center"
-                  key={index}
-                  style={{ color: "#000" }}
-                >
-                  <td>{index+1}</td>
-                  <td>{row.email || "-"}</td>
-                  <td>{row.gateway_Number || "-"}</td>
-                  <td>{row.gateway_name || "-"}</td>
-                  <td>
-                    <Form.Check
-                      type="switch"
-                      checked={row.isActive === true?"true":"false"}
-                      onChange={() => toggleActiveStatus(row.Id, row.isActive)}
-                    />
-                  </td>
-                  <td>{row.payment_type || "-"}</td>
-                  <td>{row.referredBy || "-"}</td>
-                  <td>{row.start_time ? formatTime(row.start_time) : "-"}</td>
-                  <td>{row.end_time ? formatTime(row.end_time) : "-"}</td>
-                  <td>
-                    {" "}
-                    <img
-                      src={row.image_url}
-                      alt="Gateway"
-                      width="50"
-                      height="50"
-                    />{" "}
-                  </td>
-                  
-                  <td>{row.updatetime || "-"}</td>
-                  <td>{row.timestamp || "-"}</td>
-                </tr>
-              ))
-            :
-            <h1 className="text-center">No Data Found</h1>
-            }
+              {gateways ? (
+                gateways?.map((row, index) => (
+                  <tr
+                    className="text-center"
+                    key={index}
+                    style={{ color: "#000" }}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{row.email || "-"}</td>
+                    <td>{row.gateway_Number || "-"}</td>
+                    <td>{row.gateway_name || "-"}</td>
+                    <td>
+                      <Form.Check
+                        type="switch"
+                        checked={row.is_active === true}
+                        onChange={() =>
+                          toggleActiveStatus(row.gateway_name, row.is_active)
+                        }
+                      />
+                    </td>
+                    <td>{row.payment_type || "-"}</td>
+                    <td>{row.referredBy || "-"}</td>
+                    <td>{row.start_time ? formatTime(row.start_time) : "-"}</td>
+                    <td>{row.end_time ? formatTime(row.end_time) : "-"}</td>
+                    <td>
+                      {" "}
+                      <img
+                        src={row.image_url}
+                        alt="Gateway"
+                        width="50"
+                        height="50"
+                      />{" "}
+                    </td>
+
+                    <td>{row.updatetime || "-"}</td>
+                    <td>{row.timestamp || "-"}</td>
+                    <td><Button className="btn border border-1 mx-2" onClick={() => setShowUpdateGateWay(row)}>
+                                                      <i className="fa-solid fa-pen-to-square"></i>
+                                                    </Button></td>
+                  </tr>
+                ))
+              ) : (
+                <h1 className="text-center">No Data Found</h1>
+              )}
             </tbody>
           </Table>
           <p>Total Gateways: {gatewayCount}</p>
         </Card>
       </div>
 
-      {showModal&& (
+      {showModal && (
         <MySubAdminGetWayModal
           show={showModal}
           handleClose={handleCloseModal}
           gatewayData={modalData}
         />
       )}
+      {showUpdateGateWay && (
+        <GatWayModal
+          show={!!showUpdateGateWay}
+          onHide={() => setShowUpdateGateWay(null)}
+          row={showUpdateGateWay}
+        />
+      )}
+
+
+
     </div>
   );
 };

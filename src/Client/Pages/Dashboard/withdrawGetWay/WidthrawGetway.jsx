@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import MySubAdminWidthrawModal from "./MySubAdminWidthrawGetWayModal"; // Assuming your modal for editing
 import { UpdateDepositsgatway_list, UpdateWidthdrawgatway_list, updateWidthrawGatewayStatus } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
+import WidthrawGetWayModal from "./WidthrawGetWayModal";
 export default () => {
   const { isAuthenticated, user, hasRole } = useAuth();
 
@@ -12,6 +13,7 @@ export default () => {
   const [gatewayCount, setGatewaysCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+    const [showWidthrawGetWay, setShowWidthrawGetWay] = useState(null);
 
   // Assuming 'user_role' and 'email' are stored in state or context
 console.log(user.user_role, user.email, user.referralCode);
@@ -169,6 +171,9 @@ console.log(user.user_role, user.email, user.referralCode);
                   
                   <td>{row.updatetime || "-"}</td>
                   <td>{row.timestamp || "-"}</td>
+                  <td><Button className="btn border border-1 mx-2" onClick={() => setShowWidthrawGetWay(row)}>
+                                  <i className="fa-solid fa-pen-to-square"></i>
+                                </Button></td>
                 </tr>
               ))
             :
@@ -185,6 +190,13 @@ console.log(user.user_role, user.email, user.referralCode);
           show={showModal}
           handleClose={handleCloseModal}
           gatewayData={modalData}
+        />
+      )}
+      {showWidthrawGetWay&& (
+        <WidthrawGetWayModal
+         show={!!showWidthrawGetWay}
+          onHide={() => setShowWidthrawGetWay(null)}
+          row={showWidthrawGetWay}
         />
       )}
     </div>

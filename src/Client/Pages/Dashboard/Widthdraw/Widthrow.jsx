@@ -106,7 +106,7 @@ console.log(data);
            status,
            referralCode ,
          );
-        //  alert(response.data);
+         alert(response.data);
          console.log(response);
          fetchWithdrawals()
        } catch (err) {
