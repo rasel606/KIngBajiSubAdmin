@@ -54,7 +54,7 @@ export default ({ show, handleClose }) => {
     const YOUR_IMAGEBB_API_KEY = "b3b440a6c86bd83f5a33cec74c297a9f";
     setUploading(true);
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("image", file || null);
 
     try {
       const response = await axios.post(
@@ -100,7 +100,7 @@ export default ({ show, handleClose }) => {
               value={formData.gateway_name}
               onChange={handleNameChange}
             >
-              <option value="Bkash">Select A Gateway </option>
+              <option value="">Select A Gateway </option>
               <option value="Bkash">Bkash </option>
               <option value="Nagad">Nagad </option>
               <option value="Rocket">Rocket </option>
