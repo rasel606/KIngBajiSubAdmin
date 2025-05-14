@@ -209,10 +209,8 @@ export default ({ show, setShow }) => {
                     required
                     style={{ width: "auto" }}
                   >
-                    <option value="+1">+1</option>
-                    <option value="+233">+233</option>
-                    <option value="+234">+234</option>
-                    <option value="+27">+27</option>
+                    <option value="+1">+880</option>
+                    
                   </Form.Control>
                   <Form.Control
                     style={{ width: "auto" }}
