@@ -28,7 +28,6 @@ export default ({ data, headers, approveWidthdraw }) => {
             {console.log(Number(row.status) === 0 ? "Pending" : Number(row.status) === 1 ? "Approved" : "rejected")}
             <td>{index + 1}</td>
             <td>{row.amount}</td>
-            <td>{row.base_amount}</td>
             <td>{row.mobile}</td>
             <td>{row.gateway_name}</td>
             <td>{row.transactionID}</td>

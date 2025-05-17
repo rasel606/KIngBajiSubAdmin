@@ -13,9 +13,7 @@ export default () => {
   const headers = [
     "serial",
     "Amount",
-    "Base Amount",
     "Mobile",
-    "Gateway Number",
     "Gateway Name",
     "Transaction ID",
     "Status",
@@ -80,7 +78,7 @@ console.log(data);
  
    useEffect(() => {
      fetchWithdrawals();
-   }, [filters]);
+   }, [filters,]);
  
   // const {transactionID, 
   //   userId,
@@ -106,11 +104,13 @@ console.log(data);
            status,
            referralCode ,
          );
-         alert(response.data);
+         alert(response.data.message);
          console.log(response);
          fetchWithdrawals()
+         return response
        } catch (err) {
          setError(err.response?.data?.message || "Error processing transaction");
+         return err
        } finally {
          setLoading(false);
        }
