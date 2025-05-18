@@ -6,21 +6,21 @@ import { useAuth } from "../../../Component/AuthContext";
 export default ({ show, onHide, row }) => {
 
 const { isAuthenticated, user, hasRole } = useAuth();
-console.log(user.user_role, user.email, user.referralCode);
+console.log(user);
 
   const [formData, setFormData] = useState({
     gateway_name: "",
     payment_type: "",
     gateway_number: "",
     is_active: true,
-    email: "",
-    referralCode: "",
+    email: user?.email,
+    referralCode: user?.referralCode,
   });
-  console.log(formData);
+
   // Store original values using useRef
   const originalGatewayNumber = useRef("");
   const originalPaymentType = useRef("");
-
+console.log(formData)
   useEffect(() => {
     if (row) {
       setFormData({
@@ -28,8 +28,8 @@ console.log(user.user_role, user.email, user.referralCode);
         payment_type: row.payment_type || "",
         gateway_number: row.gateway_Number || "",
         is_active: row.is_active ?? true,
-        email: user.email,
-        referralCode: user.referralCode,
+        email: user?.email,
+        referralCode: user?.referralCode,
       });
 
       // Save original values
@@ -37,7 +37,7 @@ console.log(user.user_role, user.email, user.referralCode);
       originalPaymentType.current = row.payment_type || "";
     }
   }, [row]);
-
+  console.log(formData);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -48,6 +48,7 @@ console.log(user.user_role, user.email, user.referralCode);
 
   const handleSubmit = async () => {
     try {
+      console.log("Form Data",formData);
       const response = await updateDepositGatewaytype(formData);
       console.log(response);
       if (response.data.success) {

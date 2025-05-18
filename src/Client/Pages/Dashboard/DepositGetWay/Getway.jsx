@@ -42,7 +42,7 @@ export default () => {
   const newStatus = !currentStatus;
 
   try {
-    await updateDepositGatewayStatus({ gateway_name, is_active: newStatus });
+    await updateDepositGatewayStatus({ gateway_name, is_active: newStatus, email: user?.email, referralCode: user?.referralCode });
 
     const updatedGateways = gateways.map((gateway) => {
       if (gateway.gateway_name === gateway_name) {

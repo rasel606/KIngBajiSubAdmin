@@ -131,7 +131,7 @@ export default ({ show, setShow }) => {
   const invitationUrl = `https://kingbaji.live/?ref=${user?.referralCode}`;
 
 console.log(user);
-console.log(user.referralCode);
+console.log(user?.referralCode);
 console.log(invitationUrl);
   // const copyToClipboard = () => {
   //   if (!invitationUrl.length) {

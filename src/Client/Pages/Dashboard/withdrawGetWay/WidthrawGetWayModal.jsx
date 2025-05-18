@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
+import { useAuth } from "../../../Component/AuthContext";
 
 export default ({ show, onHide, row }) => {
+
+  const { isAuthenticated, user, hasRole } = useAuth();
   const [formData, setFormData] = useState({
     gateway_name: "",
     payment_type: "",
     gateway_number: "",
     is_active: true,
+    email: user?.email,
+    referralCode: user?.referralCode,
   });
 
   // Store original values using useRef
@@ -21,6 +26,8 @@ export default ({ show, onHide, row }) => {
         payment_type: row.payment_type || "",
         gateway_number: row.gateway_Number || "",
         is_active: row.is_active ?? true,
+        email: user?.email,
+        referralCode: user?.referralCode,
       });
 
       // Save original values
@@ -71,7 +78,10 @@ export default ({ show, onHide, row }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>
-              Payment Type <small className="text-muted">(Previous: {originalPaymentType.current})</small>
+              Payment Type{" "}
+              <small className="text-muted">
+                (Previous: {originalPaymentType.current})
+              </small>
             </Form.Label>
             <Form.Select
               name="payment_type"
@@ -87,7 +97,10 @@ export default ({ show, onHide, row }) => {
 
           <Form.Group className="mt-2">
             <Form.Label>
-              Gateway Number <small className="text-muted">(Previous: {originalGatewayNumber.current})</small>
+              Gateway Number{" "}
+              <small className="text-muted">
+                (Previous: {originalGatewayNumber.current})
+              </small>
             </Form.Label>
             <Form.Control
               type="text"

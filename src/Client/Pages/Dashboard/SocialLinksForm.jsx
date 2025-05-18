@@ -5,40 +5,55 @@ import {
   getSocialLinks,
   updateAndcreateSocialLinks,
 } from "../../AdminApi/AxiosAPIService";
+import { useAuth } from "../../Component/AuthContext";
 
 export default () => {
+
+    const { isAuthenticated, user, hasRole } = useAuth();
   const [links, setLinks] = useState({
     telegram: "",
     facebook: "",
     email: "",
+    userEmail:user.email,
+    referralCode:user.referralCode
   });
   const [message, setMessage] = useState("");
   const [variant, setVariant] = useState("success");
 
+  const data = {
+    userEmail:user.email,
+    referralCode:user.referralCode
+  }
+
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const response = await getSocialLinks();
-        setLinks(response.data || {});
+        const response = await getSocialLinks(data);
+        console.log(response.data);
+        setLinks(response.data);
       } catch (error) {
         console.error("Error fetching social links:", error);
       }
     };
     fetchLinks();
-  }, []);
+  }, [user]);
 
   const handleUpdate = async (field) => {
+    console.log(links[field]);
     try {
       const response = await updateAndcreateSocialLinks({
         [field]: links[field],
+        userEmail:user.email,
+        referralCode:user.referralCode
       });
-      setLinks((prev) => ({ ...prev, ...response.data }));
+      setLinks((prev) => ({ ...prev, ...response.data.socialLink }));
       setVariant("success");
       setMessage(
         `${
           field.charAt(0).toUpperCase() + field.slice(1)
         } updated successfully.`
       );
+      alert(response.data.message);
     } catch (error) {
       setVariant("danger");
       setMessage(error.response?.data?.message || `Error updating ${field}`);

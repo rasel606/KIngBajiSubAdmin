@@ -42,7 +42,7 @@ console.log(user.user_role, user.email, user.referralCode);
   const newStatus = !currentStatus;
 
   try {
-    await updateWidthrawGatewayStatus({ gateway_name, is_active: newStatus });
+    await updateWidthrawGatewayStatus({ gateway_name, is_active: newStatus, email: user?.email, referralCode: user?.referralCode });
 
     const updatedGateways = gateways.map((gateway) => {
       if (gateway.gateway_name === gateway_name) {
