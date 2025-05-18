@@ -20,6 +20,10 @@ import ForgotPassword from "./Pages/ForgotPassword.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 import UpdatePassword from "./Pages/UpdatePassword.jsx";
 import WidthrawGetway from "./Pages/Dashboard/withdrawGetWay/WidthrawGetway.jsx";
+import SocialLinksForm from "./Pages/Dashboard/SocialLinksForm.jsx";
+
+
+
 
 const ClientLayout = lazy(() => import("./Component/ClientLayout.jsx"));
 const SubAdminHome = lazy(() => import("./Pages/Home/SubAdminHome.jsx"));
@@ -60,6 +64,7 @@ export default  [
         path: "SubAdminGetwayWidthraw",
         element: (<ProtectedRoute requiredRole="subAdmin"><WidthrawGetway /></ProtectedRoute>),
       },
+      
       // {
       //   path: "affiliate-list",
       //   element: (<ProtectedRoute requiredRole="subAdmin"><AffiliateList /></ProtectedRoute>),
@@ -98,6 +103,10 @@ export default  [
         path: "userReport",
         element: (<ProtectedRoute requiredRole="subAdmin"><GetAllUserList /></ProtectedRoute>),
       },
+      {
+        path: "updateAndcreateSocialLinks",
+        element: <SocialLinksForm />,
+      },
       // {
       //   path: "affiliateCommissionReport",
       //   element: (<ProtectedRoute requiredRole="subAdmin"><AffiliateCommissionReport /></ProtectedRoute>),
@@ -129,4 +138,5 @@ export default  [
     path: "/update_password",
     element: <UpdatePassword/>,
   },
+   
 ];

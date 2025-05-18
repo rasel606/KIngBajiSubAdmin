@@ -16,7 +16,8 @@ import {
 
 
 export default () => {
-  const { user, loading, setLoading } = useAuth();
+  const { user, loading, setLoading,totalUser,
+      totalOnlineUser } = useAuth();
   // console.log(user.balance)
 
   const [DepositSummary, setDepositSummary] = useState();
@@ -158,7 +159,7 @@ console.log(user);
                     className="mx-2 my-2 fs-2 d-flex justify-content-center"
                     style={{ color: "#ffffff" }}
                   >
-                    {500}
+                    {totalUser}
                   </h6>
                 </div>
               </Col>
@@ -190,7 +191,7 @@ console.log(user);
                     className="mx-2 my-2 fs-2 d-flex justify-content-center"
                     style={{ color: "#ffffff" }}
                   >
-                    {500}
+                    {totalOnlineUser > 0 ? totalOnlineUser : 0}
                   </h6>
                 </div>
               </Col>

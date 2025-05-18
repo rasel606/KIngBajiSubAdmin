@@ -1,15 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateDepositGatewaytype, updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
+import { useAuth } from "../../../Component/AuthContext";
 
 export default ({ show, onHide, row }) => {
+
+const { isAuthenticated, user, hasRole } = useAuth();
+console.log(user.user_role, user.email, user.referralCode);
+
   const [formData, setFormData] = useState({
     gateway_name: "",
     payment_type: "",
     gateway_number: "",
     is_active: true,
+    email: "",
+    referralCode: "",
   });
-
+  console.log(formData);
   // Store original values using useRef
   const originalGatewayNumber = useRef("");
   const originalPaymentType = useRef("");
@@ -21,6 +28,8 @@ export default ({ show, onHide, row }) => {
         payment_type: row.payment_type || "",
         gateway_number: row.gateway_Number || "",
         is_active: row.is_active ?? true,
+        email: user.email,
+        referralCode: user.referralCode,
       });
 
       // Save original values
@@ -40,6 +49,7 @@ export default ({ show, onHide, row }) => {
   const handleSubmit = async () => {
     try {
       const response = await updateDepositGatewaytype(formData);
+      console.log(response);
       if (response.data.success) {
         alert("Gateway updated successfully!");
         onHide();

@@ -12,6 +12,8 @@ const AuthContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null || '');
+  const [totalUser, setTotalUser] = useState([]);
+  const [totalOnlineUser, setTotalOnlineUser] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('authSubAdminToken') || '');
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +29,10 @@ const AuthContextProvider = ({ children }) => {
       setLoading(false);
       setIsAuthenticated(true);
       setEmail(data.data.userDetails.email);
-      console.log(data)
+      setTotalUser(data.data.totalUsers);
+      setTotalOnlineUser(data.data.totalOnlineUsers);
+      console.log(data.data)
+      
     } else {
       setIsAuthenticated(false);
     }
@@ -61,7 +66,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(response.data.user);
       setIsAuthenticated(true);
       setUser(response.data.userDetails); // This seems like the right place to set the user
-      console.log(response.data.userDetails);
+      console.log(response.data);
       setEmail(response.data.userDetails.email);
       setLoading(false);
       return response;
@@ -89,8 +94,10 @@ const AuthContextProvider = ({ children }) => {
       .then((response) => {
         setIsAuthenticated(true);
         setUser(response.data.userDetails); // This seems like the right place to set the user
-        console.log(response.data.userDetails);
+        console.log(response.data);
         setEmail(response.data.userDetails.email);
+        setTotalUser(response.data.totalUsers);
+      setTotalOnlineUser(response.data.totalOnlineUsers);
       })
       .catch(() => {
         setIsAuthenticated(false);
@@ -130,7 +137,9 @@ const AuthContextProvider = ({ children }) => {
       logout, 
       verifyUser,
       hasRole ,
-      setLoading
+      setLoading,
+      totalUser,
+      totalOnlineUser
     }}>
       {children}
     </AuthContext.Provider>

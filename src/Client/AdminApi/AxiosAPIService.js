@@ -110,3 +110,5 @@ export const Emailsend = (formData) => API.post("/send-otp", formData);
 export const GetGameProvider = () => API.get("/get_all_providers");
 export const GetGameCategory= () => API.get("/get_all_category");
 export const GetBettingHistoryByMember = (data) => API.post("/bettingHistory-member-summary", data);
+export const updateAndcreateSocialLinks = (data) => API.post("/update_and_create_socialLinks", data);
+export const getSocialLinks = (data) => API.post("/get_socialLinks", data);

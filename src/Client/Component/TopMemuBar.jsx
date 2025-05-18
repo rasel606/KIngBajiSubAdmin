@@ -1,5 +1,13 @@
 import React, { Fragment, useRef, useState } from "react";
-import { Accordion, Button, Container, Form, InputGroup, Modal, Navbar } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Container,
+  Form,
+  InputGroup,
+  Modal,
+  Navbar,
+} from "react-bootstrap";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   AiOutlineBank,
@@ -43,7 +51,7 @@ export default () => {
 
   const [show, setShow] = useState(false);
 
-  const { isAuthenticated, user, hasRole,logout } = useAuth();
+  const { isAuthenticated, user, hasRole, logout } = useAuth();
 
   const [showAffiliate, setShowAffiliate] = useState(false);
   const [showAgent, setShowAgent] = useState(false);
@@ -85,8 +93,6 @@ export default () => {
     );
   };
 
-
-
   const sidebarItems = [
     {
       title: "DashBoard",
@@ -124,6 +130,7 @@ export default () => {
       url: "userReport",
       subMenu: [],
     },
+
     // {
     //   title: "Affiliate",
     //   icon: <BsCartPlus className="side-bar-item-icon" />,
@@ -165,6 +172,11 @@ export default () => {
           title: "Live Chat",
           icon: <CiChat2 size={16} className="side-bar-subitem-icon" />,
           url: "contactus",
+        },
+        {
+          title: "Social_Links",
+          icon: <AiOutlineUser size={16} className="side-bar-item-icon" />,
+          url: "updateAndcreateSocialLinks",
         },
         // {
         //   title: "Telegram",
@@ -234,7 +246,6 @@ export default () => {
       url: "profile",
       subMenu: [],
     },
-    
   ];
 
   const onLogout = () => {
@@ -263,7 +274,8 @@ export default () => {
             <div className="header-desktop__former">
               <div className="header-desktop__latter">
                 <div className="header-desktop__item header-desktop__auth-container auth-container ">
-                  <Button className="mx-2"
+                  <Button
+                    className="mx-2"
                     variant="primary"
                     onClick={() => setShowAffiliate(true)}
                   >
@@ -309,7 +321,18 @@ export default () => {
           end
           className="d-flex  justify-content-center sticky-top "
         >
-         <img src="https://ik.imagekit.io/fjs420h8f/kingbaji_2025-02-24_at_02.26.56_7859e755-removebg-preview.png?updatedAt=1740595806960" style={{width:"200px" , height:"40px", marginTop:"10px", marginBottom:"10px",marginLeft:"10px",marginRight:"10px"}} alt="" />
+          <img
+            src="https://ik.imagekit.io/fjs420h8f/kingbaji_2025-02-24_at_02.26.56_7859e755-removebg-preview.png?updatedAt=1740595806960"
+            style={{
+              width: "200px",
+              height: "40px",
+              marginTop: "10px",
+              marginBottom: "10px",
+              marginLeft: "10px",
+              marginRight: "10px",
+            }}
+            alt=""
+          />
         </NavLink>
 
         <Accordion defaultActiveKey={`${isSidebarAccordionActive()}`}>
@@ -325,7 +348,6 @@ export default () => {
                     {item.icon}
                     <span className="side-bar-item-caption">{item.title}</span>
                   </NavLink>
-                  
                 </Accordion.Header>
                 <Accordion.Body>
                   {item.subMenu.map((subItem, index) => (
@@ -357,15 +379,17 @@ export default () => {
               >
                 {item.icon}
                 <span className="side-bar-item-caption">{item.title}</span>
-
               </NavLink>
-              
             );
-            
           })}
-          
         </Accordion>
-        <span className="side-bar-item " onClick={()=>logout()} style={{cursor:"pointer"}}><AiOutlineLogout className="side-bar-item-icon" /> logout</span>
+        <span
+          className="side-bar-item "
+          onClick={() => logout()}
+          style={{ cursor: "pointer" }}
+        >
+          <AiOutlineLogout className="side-bar-item-icon" /> logout
+        </span>
       </div>
 
       <div ref={(div) => (contentRef = div)} className="content">
@@ -373,18 +397,19 @@ export default () => {
         <AffiliateModal show={showAffiliate} setShow={setShowAffiliate} />
 
         {/* Agent Modal */}
-        <AgentModal show={showAgent} setShow={setShowAgent}>
- 
-        </AgentModal>
+        <AgentModal show={showAgent} setShow={setShowAgent}></AgentModal>
 
         {/* SubAgent Modal */}
-        <SubAgentModal show={showSubAgent} setShow={setShowSubAgent}>
-        </SubAgentModal>
+        <SubAgentModal
+          show={showSubAgent}
+          setShow={setShowSubAgent}
+        ></SubAgentModal>
 
         {/* User Modal */}
-        <CreateUserModal show={showUser} setShow={setShowUser}>
-         
-        </CreateUserModal>
+        <CreateUserModal
+          show={showUser}
+          setShow={setShowUser}
+        ></CreateUserModal>
       </div>
     </Fragment>
   );

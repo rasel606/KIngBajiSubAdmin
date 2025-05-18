@@ -45,6 +45,7 @@ export default ({ show, setShow }) => {
     lastName: "",
     dateOfBirth: "",
     email: "",
+    referredBy: user?.referralCode
   });
   // const [step, setStep] = useState(1);
   const [copied, setCopied] = useState(false);
@@ -99,12 +100,12 @@ export default ({ show, setShow }) => {
 
    
     try {
-      const referralCode = localStorage.getItem("referralCode");
-      console.log(referralCode);
+      
+      
       console.log(userId, password, selectedCountry, phoneNumber);
 
 
-      const data = { ...formData, referredBy: referralCode };
+      const data = { ...formData };
       
       const response = await CreateUserNormal(data);
       console.log(data);
@@ -126,8 +127,8 @@ export default ({ show, setShow }) => {
       setShowToast(true);
     }
   };
-  const invitationCode = `${user.referralCode}`;
-  const invitationUrl = `https://kingbaji.live/?ref=${user.referralCode}`;
+  const invitationCode = `${user?.referralCode}`;
+  const invitationUrl = `https://kingbaji.live/?ref=${user?.referralCode}`;
 
 console.log(user);
 console.log(user.referralCode);
