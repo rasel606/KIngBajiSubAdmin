@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
-
+import { toast } from 'react-toastify';
 export default ({ show, onHide, row, refreshData }) => {
 
   const { isAuthenticated, user, hasRole } = useAuth();
@@ -51,14 +51,14 @@ export default ({ show, onHide, row, refreshData }) => {
       const response = await updateWithdrawalGatewayType(formData);
       refreshData()
       if (response.data.success) {
-        alert("Gateway updated successfully!");
+        toast.success(response.data.message || "Status updated successfully!");
         onHide();
       } else {
-        alert("Update failed!");
+        toast.success(response.data.message || "Update failed!");
       }
     } catch (err) {
       console.error(err);
-      alert("Error updating gateway");
+      toast.error("Error updating gateway");
     }
   };
 

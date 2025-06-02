@@ -9,7 +9,7 @@ import {
   Container,
 } from "react-bootstrap";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
 import MySubAdminWidthrawModal from "./MySubAdminWidthrawGetWayModal"; // Assuming your modal for editing
 import {
   UpdateDepositsgatway_list,
@@ -80,7 +80,10 @@ export default () => {
       });
 fetchGateways()
       setGateways(updatedGateways);
+
+      toast.success("Status updated successfully!");
     } catch (error) {
+      toast.error("Update failed!");
       console.error("Failed to update status:", error);
       console.log(error);
     }
