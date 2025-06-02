@@ -59,7 +59,9 @@ export default function PaymentGateways() {
             : gateway
         )
       );
+      toast.success(response.data.message || "updated successfully!");
     } catch (error) {
+      toast.error(response.data.error || "updated failed!");
       console.error("Failed to update status:", error);
       setError("Failed to update gateway status.");
     }
