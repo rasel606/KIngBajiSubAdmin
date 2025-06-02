@@ -117,3 +117,30 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
   }
 }
+.chat-list-container {
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.messages-container {
+  background-color: #f0f2f5;
+  min-height: 0;
+}
+
+.message-bubble {
+  position: relative;
+  word-wrap: break-word;
+}
+
+.message-input {
+  background-color: #f8f9fa;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 767.98px) {
+  .chat-list-container {
+    height: auto;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}

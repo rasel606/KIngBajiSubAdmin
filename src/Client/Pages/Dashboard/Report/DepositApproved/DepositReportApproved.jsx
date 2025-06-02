@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Form, Button } from "react-bootstrap";
+import { Card, Form, Button, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -9,7 +9,7 @@ import DepositTableReportList from "./DepositTableReportList";
 import { searchDepositTransactionsReportAprove } from "../../../../AdminApi/AxiosAPIService";
 
 export default () => {
-
+  const [filtersCollapsed, setFiltersCollapsed] = useState(false);
     const { isAuthenticated, user, hasRole } = useAuth();
     console.log(user.referralCode);
   const [data, setData] = useState([]);
@@ -65,37 +65,50 @@ console.log(data);
   }, [filters]);
 
   return (
-    <div>
-      <Card body style={{ background: "#38094d" }} className="mx-3 ">
-        <div className="d-flex">
-          <div className="mx-2">
-            <Form.Label className="text-white">User ID</Form.Label>
-            <Form.Control
-              type="text"
-              value={filters.userId}
-              onChange={(e) =>
-                setFilters({ ...filters, userId: e.target.value })
-              }
-            />
+   <div>
+      <Card style={{ background: "#38094d" }} className="mx-3 ">
+        <Card.Body>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h5 className="text-white mb-0">Deposit Filters</h5>
+            <Button
+              variant="link"
+              className="text-white d-md-none p-0"
+              onClick={() => setFiltersCollapsed(!filtersCollapsed)}
+            >
+              <i
+                className={`fas fa-${filtersCollapsed ? "plus" : "minus"}`}
+              ></i>
+            </Button>
           </div>
 
-          <div className="mx-3">
-            <Form.Label className="text-white">Gateway</Form.Label>
-            <Form.Control
-              type="text"
-              value={filters.gateway_name}
-              onChange={(e) =>
-                setFilters({ ...filters, gateway_name: e.target.value })
-              }
-            />
-          </div>
-          {/* <div className="mx-3 ">
+          <div className={`${filtersCollapsed ? "d-none" : ""} d-md-block`}>
+            <Row className="g-4">
+               <Col xs={12} md={6} lg={3}>
+                <Form.Label className="text-white">User ID</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={filters.userId}
+                  onChange={(e) =>
+                    setFilters({ ...filters, userId: e.target.value })
+                  }
+                />
+              </Col>
+
+               <Col xs={12} md={6} lg={3}>
+                <Form.Label className="text-white">Gateway</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={filters.gateway_name}
+                  onChange={(e) =>
+                    setFilters({ ...filters, gateway_name: e.target.value })
+                  }
+                />
+              </Col>
+              {/* <div className="mx-3 ">
             <Form.Label className="text-white">Status</Form.Label>
             <Form.Select
               value={filters.status}
-              onChange={(e) =>
-                setFilters({ ...filters, status: e.target.value })
-              }
+              onChange={(e) => setFilters({ ...filters, status: e.target.value })}
             >
               <option value={""}>All</option>
               <option value="0">Pending</option>
@@ -103,49 +116,57 @@ console.log(data);
               <option value="2">Rejected</option>
             </Form.Select>
           </div> */}
-          <div className="mx-3 d-flex-row">
-            <Form.Label className="text-white">Start Date</Form.Label>
-            <DatePicker
-              selected={filters.startDate}
-              onChange={(date) => setFilters({ ...filters, startDate: date })}
-              className="form-control"
-            />
+               <Col xs={12} md={6} lg={3}>
+                <Form.Label className="text-white">Start Date</Form.Label>
+                <DatePicker
+                  selected={filters.startDate}
+                  onChange={(date) =>
+                    setFilters({ ...filters, startDate: date })
+                  }
+                  className="form-control"
+                />
+              </Col>
+               <Col xs={12} md={6} lg={3}>
+                <Form.Label className="text-white">End Date</Form.Label>
+                <DatePicker
+                  selected={filters.endDate}
+                  onChange={(date) => setFilters({ ...filters, endDate: date })}
+                  className="form-control"
+                />
+              </Col>
+              <Col xs={12} md={6} lg={3}>
+                <Button onClick={fetchWithdrawals} disabled={loading}>
+                  {loading ? "Searching..." : "Search"}
+                </Button>
+              </Col>
+            </Row>
           </div>
-          <div className="mx-5 d-flex-row">
-            <Form.Label className="text-white">End Date</Form.Label>
-            <DatePicker
-              selected={filters.endDate}
-              onChange={(date) => setFilters({ ...filters, endDate: date })}
-              className="form-control"
-            />
-          </div>
-          <div className="mx-5 d-flex align-items-end">
-            <Button onClick={fetchWithdrawals} disabled={loading}>
-              {loading ? "Searching..." : "Search"}
-            </Button>
-          </div>
-        </div>
+        </Card.Body>
       </Card>
-      {error && <p className="text-danger text-center">{error}</p>}
       <div className="m-3">
         <Card
+          className="border-0 "
           style={{
-            background: "transparent",
-            color: "white",
-            border: "1px solid white",
+            background:"#38094d",
+            border: "1px solid rgba(255,255,255,0.2)",
           }}
-          className="my-3"
         >
-          <h3 className="p-3">Total Deposits: {total}</h3>
+          <Card.Body style={{ background: "transparent",color:"white" ,border:"1px solid white"}} className="py-2">
+            <div className="d-flex justify-content-between align-items-center">
+              <h6 className="text-white mb-0">Total Deposits</h6>
+              <h4 className="text-white mb-0">${total}</h4>
+            </div>
+          </Card.Body>
         </Card>
-
-        <Card style={{ background: "transparent" }}>
-          <DepositTableReportList
+        <Card style={{ background: "transparent", height: "100%" }} className="border-0 ">
+          {data.length > 0 ? (
+           <DepositTableReportList
             data={data}
             headers={[
               "serial",
               "Amount",
               "Base Amount",
+              "Bonus Amount",
               "Mobile",
               "Type",
               "Gateway Name",
@@ -156,7 +177,13 @@ console.log(data);
               "Update Time",
              
             ]}
+
+            error ={error}
+            loading = {loading}
           />
+          ) : (
+            <h3 className="text-white text-center">No Data Found</h3>
+          )}
         </Card>
       </div>
     </div>

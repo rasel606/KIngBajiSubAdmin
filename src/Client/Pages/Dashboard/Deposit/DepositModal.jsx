@@ -3,9 +3,8 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { UpdateDeposits_listStutas } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
 
-const DepositModal = ({ row, approveDeposit, ...modalProps }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const DepositModal = ({ row, approveDeposit,onHide,show,fetchWithdrawals,error,loading,setLoading,setError}) => {
+
 console.log(row);
 const{user}=useAuth();
 console.log(user);
@@ -27,51 +26,58 @@ console.log(isPending,userId,amount,base_amount,mobile,gateway_name,transactionI
     "User ID": userId,
     "Date Time": datetime,
   };
-  let referralCode = row.referredBy;
-  const handleAction = async (status,userId) => {
-    console.log(status,userId);
-    setLoading(true);
-    setError(""); // Clear previous error
-    
-    try {
-      const response = await approveDeposit(transactionID, 
-        userId,
-        status,
-        referralCode ,
-      );
-      alert(response.data);
-      console.log(response.data);
-      console.log(approveDeposit);
-      modalProps.onHide(); // Close modal after action
-    } catch (err) {
-      setError(err.response?.data?.message || "Error processing transaction");
-    } finally {
-      setLoading(false);
-    }
+  let referralCode = user.referralCode;
+
+  const handleApprove = () => {
+    approveDeposit(transactionID, userId, 1, user.referralCode); // status 1 = approve
+    onHide();
+
   };
 
+  const handleReject = () => {
+    approveDeposit(transactionID, userId, 2, user.referralCode); // status 2 = reject
+    onHide();
+  };
+
+
   return (
-    <Modal {...modalProps} size="md" centered>
-      <Modal.Header closeButton>
+    <Modal show={show} onHide={onHide}  size="md" centered>
+       <Modal.Header closeButton className="bg-dark text-white">
         <Modal.Title>Transaction Details</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form>
-          {Object.entries(NewHeaders).map(([key, value]) => (
+      <Modal.Body className="bg-dark">
+        <div className="mb-3">
+          {Object.entries(NewHeaders).map(([key]) => (
             <Form.Group className="mb-3" key={key}>
               <Form.Label>{key}</Form.Label>
+              
+            </Form.Group>
+          ))}
+          {Object.entries(row).map(([value]) => (
+            <Form.Group className="mb-3" key={value}>
+            
               <Form.Control type="text" value={value} readOnly />
             </Form.Group>
           ))}
-        </Form>
-        {error && <div className="text-danger">{error}</div>}
+        </div>
+        
+        {error && <div className="alert alert-danger">{error}</div>}
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="success" onClick={() => handleAction(1,userId)} disabled={loading || !isPending}>
-          Approve
-        </Button>
-        <Button variant="danger" onClick={() => handleAction(2,userId)} disabled={loading || !isPending}>
-          Reject
+      <Modal.Footer className="bg-dark">
+       {isPending && (
+          <>
+            <Button variant="success" onClick={handleApprove} disabled={loading}>
+              Approve
+            </Button>
+            <Button variant="danger" onClick={handleReject} disabled={loading}>
+              Reject
+            </Button>
+          </>
+        )}
+          {/* {loading ? "Processing..." : "Reject"} */}
+        
+        <Button variant="secondary" onClick={onHide}>
+          Close
         </Button>
       </Modal.Footer>
     </Modal>

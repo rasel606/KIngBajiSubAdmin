@@ -129,7 +129,7 @@ console.log(data);
       </Card>
       <div className="m-3">
         
-          <UserTableReportList data={data} headers={headers}   />
+          <UserTableReportList data={data} headers={headers}  fetchWithdrawals={fetchWithdrawals} />
        
       </div>
     </div>

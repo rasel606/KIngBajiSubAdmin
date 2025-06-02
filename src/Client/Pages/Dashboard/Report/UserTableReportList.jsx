@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import UserTransModel from "./UserTransModel";
 import UserGameHistoryModel from "./UserGameHistoryModel";
-
+import { toast } from 'react-toastify';
 import {
   AdminVerifyEmail,
   AdminVerifyPhone,
@@ -10,7 +10,7 @@ import {
 import ChangePasswordUserModal from "./ChangePasswordUserModal";
 import ChangeEmail from "./ChangeEmail";
 
-export default ({ data, headers }) => {
+export default ({ data, headers,fetchWithdrawals }) => {
   const [modalShowUserTrans, setModalShowUserTrans] = useState(null);
   const [modalShowGameHistory, setModalShowGameHistory] = useState(null);
   const [modalchangePasswordUser, setModalChangePasswordUser] = useState(null);
@@ -24,10 +24,12 @@ export default ({ data, headers }) => {
       const response = await AdminVerifyPhone({ phoneNumber, userId });
       console.log(response.data.message);
       if (response.ok) {
-        alert(response.data.message);
+        // alert(response.data.message);
         setLoadingVerify(false);
+        toast.success(response.data.message || "Status updated successfully!");
+        fetchWithdrawals();
       } else {
-        alert(response.error);
+        toast.success(response.error || "Status not updated !");
         setLoadingVerify(false);
       }
     } catch (error) {
@@ -42,10 +44,13 @@ export default ({ data, headers }) => {
       const response = await AdminVerifyEmail({ userId });
       console.log(response.data.message);
       if (response) {
-        alert(response.data.message);
+        // alert(response.data.message);
         setLoadingVerify(false);
+        toast.success(response.data.message || "Status updated successfully!");
+        fetchWithdrawals();
       } else {
-        alert(response.error);
+        // alert(response.error);
+        toast.success(response.error || "Status not updated !");
         setLoadingVerify(false);
       }
     } catch (error) {

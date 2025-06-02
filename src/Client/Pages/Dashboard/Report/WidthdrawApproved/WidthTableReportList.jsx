@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Card, Form, Button, Row, Col, Table } from "react-bootstrap";
 
 
-
-
-export default  ({ data, headers }) => {
+export default  ({ data, headers,error,loading }) => {
   const [modalShow, setModalShow] = useState(null);
 
   const handleShowModal = (row) => {
@@ -15,46 +13,75 @@ export default  ({ data, headers }) => {
     setModalShow(null);
   };
 
+
+  console.log(data);
+
   return (
-    <table responsive style={{ background: "transparent" }} className="table-hover custom-table text-white">
-      <thead>
-        <tr>
-          {headers.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, index) => (
-          <tr key={index}>
-            {console.log(Number(row.status) === 0 ? "Pending" : "Approved")}
-            <td>{index + 1}</td>
-            <td>{row.base_amount}</td>
-            <td>{row.type}</td>
-            <td>{row.Mobile}</td>
-            <td>{row.gateway_name}</td>
-             {/*<td>{row.transactionID}</td> */}
-            <td>{Number(row.status) === 0 ? "Pending" : "Approved"}</td>
-            <td>{row.userId}</td>
-            <td>{row.datetime}</td>
-            <td>{row.updatetime}</td>
-            <td>
-              {/* <Button className="btn border border-1 mx-2" onClick={() => handleShowModal(row)}>
-                <i className="fa-solid fa-pen-to-square"></i>
-              </Button> */}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-      {/* {modalShow && (
-        <WidthrawModal
+ <Card.Body className="p-0">
+      {loading ? (
+        <div className="text-center py-5">
+          <div className="spinner-border text-light" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="text-white mt-2">Loading deposits...</p>
+        </div>
+      ) : data.length === 0 ? (
+        <div className="alert alert-danger">No Data Found</div>
+      ) : (
+        <div className="table-responsive ">
+          <Table className="table table-hover text-white custom-table">
+            <thead>
+              <tr>
+                {headers.map((header, index) => (
+                  <th key={index}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{row.amount}</td>
+                  <td>{row.base_amount}</td>
+                  
+                  <td>{row.mobile}</td>
+                  <td>{row.gateway_Number}</td>
+                  <td>{row.gateway_name}</td>
+                  <td>{row.transactionID}</td>
+                  <td
+                    className={row.status === 1 ? "bg-success text-dark" : ""}
+                  >
+                    {Number(row.status) === 1 ? "Approved" : "Rejected"}
+                  </td>
+                  <td className="bg-gray">{row.userId}</td>
+                  <td>{row.datetime}</td>
+                  <td>{row.updatetime}</td>
+                  {/* <td>
+                    <Button
+                       variant="outline-light" 
+                          size="sm"
+                          className="px-2 py-1"
+                      onClick={() => handleShowModal(row)}
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </Button>
+                  </td> */}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
+{/* 
+      {modalShow && (
+        <DepositModal
           show={!!modalShow}
           onHide={handleCloseModal}
           row={modalShow} // Pass selected row data
           approveDeposit={approveDeposit}
         />
       )} */}
-    </table>
+    </Card.Body>
   );
 };
 

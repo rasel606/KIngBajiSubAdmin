@@ -13,6 +13,9 @@ import { useAuth } from "../Component/AuthContext";
 import { useLocation } from "react-router-dom";
 import { CreateUserNormal } from "../AdminApi/AxiosAPIService";
 import Clipboard from 'clipboard';
+
+import { toast } from 'react-toastify';
+
 export default ({ show, setShow }) => {
   const { isAuthenticated, user } = useAuth();
 
@@ -23,7 +26,7 @@ export default ({ show, setShow }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
-  const [selectedCountry, setSelectedCountry] = useState(selectedCurrency.code);
+  const [selectedCountry, setSelectedCountry] = useState(currencies[0]?.code);
   const [phoneNumber, setPhoneNumber] = useState();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -40,7 +43,7 @@ export default ({ show, setShow }) => {
     userId: "",
     password: "",
     phone: "",
-    currencyType: "BDT",
+    countryCode: selectedCountry,
     firstName: "",
     lastName: "",
     dateOfBirth: "",
@@ -111,20 +114,13 @@ export default ({ show, setShow }) => {
       console.log(data);
   if (response.status === 201) {
     console.log("Signup successful!");
-    setTimeout(() => {
-      setToastMessage("Signup Successful!");
-      setToastVariant("success");
-      setShowToast(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 2000);
-    }, 1000);
+    toast.success(response.data.message || "Signup successful!");
+    setShow(false);
   }
 
     } catch (error) {
-      setToastMessage("Signup Failed! Please try again.");
-      setToastVariant("danger");
-      setShowToast(true);
+     toast.error(error.data.message || "Signup Field!");
+     setShow(false);
     }
   };
   const invitationCode = `${user?.referralCode}`;
@@ -155,7 +151,8 @@ console.log(invitationUrl);
 
     const copyToClipboard = () => {
     navigator.clipboard.writeText(invitationUrl);
-    alert('Invitation code copied!');
+    toast.success("Invitation code copied!");
+    // alert('Invitation code copied!');
   };
   
   

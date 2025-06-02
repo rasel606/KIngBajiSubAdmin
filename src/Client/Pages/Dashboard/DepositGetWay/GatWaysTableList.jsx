@@ -10,7 +10,6 @@ export default ({ data, headers }) => {
     const updatedData = datas.map((row) => {
       if (row.Id === id) {
         // Toggle isActive value
-        return { ...row, isActive: row.isActive === "true" ? "false" : "true" };
       }
       return row;
     });

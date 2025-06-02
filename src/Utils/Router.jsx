@@ -15,6 +15,7 @@ import {
 import Client from "../Client/index";
 
 import AuthContextProvider, { useAuth } from "../Client/Component/AuthContext";
+// import { ChatProvider, SocketProvider } from "../Client/Component/ChatContext";
 
 
 
@@ -23,24 +24,21 @@ import AuthContextProvider, { useAuth } from "../Client/Component/AuthContext";
 
 export default () => {
 
+    const token = localStorage.getItem('authSubAdminToken');
+
   const router = createBrowserRouter([
     ...Client,
-    // <AuthContextProvider>
-    //       <Suspense fallback={<div>Loading...</div>}>
-    //         {/* <RouterProvider router={router} /> */}
-    //       </Suspense>
-    //     </AuthContextProvider>
-  
   ]);
 
   return (
 
       
     <AuthContextProvider>
-    
+  {/* <ChatProvider> */}
     <Suspense fallback={<div style={{background:"#4c086c", height:"100vh", width:"100%"}}> <p style={{color:"#fff"}}><img src="/img/Spinner-1s-200px.svg" alt="" /></p></div>}>
       <RouterProvider router={router} />
     </Suspense>
+    {/* </ChatProvider> */}
     
     </AuthContextProvider>
 

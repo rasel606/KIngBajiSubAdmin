@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 const API = axios.create({ baseURL: "https://api.kingbaji.live/api/v1" });
@@ -109,6 +110,10 @@ export const verifyEmail = (formData) => API.post("/verify-email", formData);
 export const Emailsend = (formData) => API.post("/send-otp", formData);
 export const GetGameProvider = () => API.get("/get_all_providers");
 export const GetGameCategory= () => API.get("/get_all_category");
+export const getNewChatList = (senderId) => API.get(`/contacts/${senderId}`);
+export const getNewChatHistory = (senderId,receiverId) => API.get(`/history/${senderId}/${receiverId}`);
 export const GetBettingHistoryByMember = (data) => API.post("/bettingHistory-member-summary", data);
 export const updateAndcreateSocialLinks = (data) => API.post("/update_and_create_socialLinks", data);
 export const getSocialLinks = (data) => API.post("/get_socialLinks", data);
+export const updateSocialLinks = (data) => API.post("/update_socialLinks", data);
+export const deleteSocialLinks = (data) => API.post("/delete_socialLinks", data);

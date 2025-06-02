@@ -3,7 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
 
-export default ({ show, onHide, row }) => {
+export default ({ show, onHide, row, refreshData }) => {
 
   const { isAuthenticated, user, hasRole } = useAuth();
   const [formData, setFormData] = useState({
@@ -18,6 +18,8 @@ export default ({ show, onHide, row }) => {
   // Store original values using useRef
   const originalGatewayNumber = useRef("");
   const originalPaymentType = useRef("");
+
+  
 
   useEffect(() => {
     if (row) {
@@ -47,6 +49,7 @@ export default ({ show, onHide, row }) => {
   const handleSubmit = async () => {
     try {
       const response = await updateWithdrawalGatewayType(formData);
+      refreshData()
       if (response.data.success) {
         alert("Gateway updated successfully!");
         onHide();

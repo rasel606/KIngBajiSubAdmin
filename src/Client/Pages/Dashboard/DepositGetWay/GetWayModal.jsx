@@ -3,7 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { updateDepositGatewaytype, updateWithdrawalGatewayType } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
 
-export default ({ show, onHide, row }) => {
+export default ({ show, onHide, row,refreshData }) => {
 
 const { isAuthenticated, user, hasRole } = useAuth();
 console.log(user);
@@ -51,6 +51,8 @@ console.log(formData)
       console.log("Form Data",formData);
       const response = await updateDepositGatewaytype(formData);
       console.log(response);
+      refreshData()
+      onHide();
       if (response.data.success) {
         alert("Gateway updated successfully!");
         onHide();

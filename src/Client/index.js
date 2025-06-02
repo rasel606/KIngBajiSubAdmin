@@ -21,6 +21,8 @@ import ResetPassword from "./Pages/ResetPassword.jsx";
 import UpdatePassword from "./Pages/UpdatePassword.jsx";
 import WidthrawGetway from "./Pages/Dashboard/withdrawGetWay/WidthrawGetway.jsx";
 import SocialLinksForm from "./Pages/Dashboard/SocialLinksForm.jsx";
+import ChatList from "./Pages/Dashboard/ChatList.jsx";
+import ChatLayout from "./Pages/Dashboard/ChatLayout.jsx";
 
 
 
@@ -102,6 +104,10 @@ export default  [
       {
         path: "userReport",
         element: (<ProtectedRoute requiredRole="subAdmin"><GetAllUserList /></ProtectedRoute>),
+      },
+      {
+        path: "liveChat",
+        element: (<ProtectedRoute requiredRole="subAdmin"><ChatLayout /></ProtectedRoute>),
       },
       {
         path: "updateAndcreateSocialLinks",

@@ -171,7 +171,7 @@ export default () => {
         {
           title: "Live Chat",
           icon: <CiChat2 size={16} className="side-bar-subitem-icon" />,
-          url: "contactus",
+          url: "liveChat",
         },
         {
           title: "Social_Links",
