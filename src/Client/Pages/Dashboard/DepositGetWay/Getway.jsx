@@ -6,7 +6,7 @@ import MySubAdminGetWayModal from "./MySubAdminGetWayModal";
 import GatWayModal from "./GetWayModal";
 import { updateDepositGatewayStatus, UpdateDepositsgatway_list } from "../../../AdminApi/AxiosAPIService";
 import { useAuth } from "../../../Component/AuthContext";
-
+import { toast } from 'react-toastify';
 
 export default function PaymentGateways() {
   const { isAuthenticated, user, hasRole } = useAuth();
