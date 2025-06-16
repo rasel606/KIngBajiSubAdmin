@@ -26,7 +26,7 @@ console.log(row.userId, user.referralCode, amount, row.phone[0].number, type);
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://api.kingbaji.live/api/v1/approveTransfarWithDepositbySubAdmin",
+        "http://localhost:5000/api/v1/approveTransfarWithDepositbySubAdmin",
         {
           userId: row.userId,
           referralCode: user.referralCode,
