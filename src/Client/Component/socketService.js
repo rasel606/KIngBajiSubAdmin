@@ -7,7 +7,7 @@
 
 //   connect(token) {
 //   console.log(token)
-//     this.socket = io("http://localhost:5000", {
+//     this.socket = io("https://api.kingbaji.live", {
 //       auth: { token },
 //       reconnection: true,
 //       reconnectionAttempts: 5,
